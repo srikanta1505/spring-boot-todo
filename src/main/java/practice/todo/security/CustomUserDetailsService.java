@@ -3,10 +3,11 @@ package practice.todo.security;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import practice.todo.user.AppUser;
 import practice.todo.user.UserRepository;
-
+@Service
 public class CustomUserDetailsService implements UserDetailsService{
 
 	private final UserRepository userRepository;
@@ -18,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		AppUser user = (AppUser) userRepository.findByUsername(username)
-				.orElseThrow(() -> new RuntimeException("User Name is Not Avialable"));
+				.orElseThrow(() -> new RuntimeException("User Name is Not Avialable"+username));
 		
 		return new CustomUserDetails(user);
 	}
